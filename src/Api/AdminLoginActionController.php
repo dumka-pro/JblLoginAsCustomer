@@ -47,18 +47,11 @@ class AdminLoginActionController extends AbstractController
     public function getToken(RequestDataBag $request, Context $context): JsonResponse
     {
         try {
-            /** @var bool $isAdmin */
-            $isAdmin = $context->getSource() instanceof AdminApiSource && $context->getSource()->isAdmin();
-
             /** @var string $customerId */
             $customerId = $request->getAlnum("customerId");
 
             /** @var string $customerId */
             $salesChannelId = $request->getAlnum("salesChannelId");
-
-            if(!$isAdmin) {
-                throw new AdminLoginActionException("Not allowed");
-            }
 
             if(!$customerId || !$salesChannelId) {
                 throw new AdminLoginActionException("Not all required parameters were given: customerId, salesChannelId");
