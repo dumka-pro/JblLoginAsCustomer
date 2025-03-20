@@ -1,0 +1,11 @@
+{
+  "jbl-login-as-customer": {
+    "buttonLg": "Увійти як клієнт",
+    "buttonSm": "Увійти",
+    "infoMessage": "Магазин відкриється в новому вікні. Будь ласка, переконайтеся, що ваш браузер дозволяє спливаючі вікна.",
+    "modalTitle" : "Виберіть канал продажу",
+    "gridTitleSalesChannel" : "Канал продажу",
+    "gridTitleDomain" : "Домен",
+    "gridTitleAction" : "Дія"
+  }
+}
