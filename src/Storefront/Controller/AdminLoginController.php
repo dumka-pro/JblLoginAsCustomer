@@ -61,7 +61,7 @@ class AdminLoginController extends StorefrontController
             $this->addFlash(self::DANGER, $this->trans('error.message-default'));
         }
 
-        return $this->redirectToRoute('frontend.home.page');
+        return $this->redirectToRoute('frontend.account.home.page');
     }
 
 }
