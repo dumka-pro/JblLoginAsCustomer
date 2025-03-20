@@ -2,7 +2,9 @@
 
 namespace JblLoginAsCustomer\Storefront\Controller;
 
+use Shopware\Core\Checkout\Customer\SalesChannel\AbstractLogoutRoute;
 use Shopware\Core\Checkout\Customer\SalesChannel\AccountService;
+use Shopware\Core\Framework\Validation\DataBag\RequestDataBag;
 use Shopware\Core\System\SalesChannel\Context\SalesChannelContextPersister;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Storefront\Controller\StorefrontController;
@@ -21,10 +23,12 @@ class AdminLoginController extends StorefrontController
     /**
      * @param SalesChannelContextPersister $salesChannelContextPersister
      * @param AccountService $accountService
+     * @param AbstractLogoutRoute $logoutRoute
      */
     public function __construct(
         protected SalesChannelContextPersister $salesChannelContextPersister,
-        protected AccountService $accountService
+        protected AccountService $accountService,
+        protected AbstractLogoutRoute $logoutRoute
     ) {
     }
 
@@ -46,6 +50,10 @@ class AdminLoginController extends StorefrontController
                 throw new \Exception("Something went wrong");
             }
 
+            if ($context->getCustomer() !== null) {
+                $this->logoutRoute->logout($context, new RequestDataBag());
+            }
+
             $this->accountService->loginById($data["customerId"], $context);
 
             $this->addFlash(self::SUCCESS, $this->trans('admin-login.success'));
@@ -53,7 +61,7 @@ class AdminLoginController extends StorefrontController
             $this->addFlash(self::DANGER, $this->trans('error.message-default'));
         }
 
-        return $this->redirectToRoute('frontend.home.page');
+        return $this->redirectToRoute('frontend.account.home.page');
     }
 
 }
